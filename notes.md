@@ -1,0 +1,2 @@
+- How do we define "demokratieförderdlich"? Idea: start from simple definition to more complex definition.
+- Extract Förderquoten.
