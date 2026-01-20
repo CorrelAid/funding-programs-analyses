@@ -47,3 +47,5 @@ mask_funding_type = create_mask(df["funding_type"], funding_type_selection)
 df_ = df_.loc[mask_funding_type]
 
 st.dataframe(df_, column_order=(["id_hash", "title", "funding_location", "funding_type"]))
+
+# TODO: add histogram counting project by funding_location and funding_type <- how to deal with counts belonging to multiple values e.g. bundeslaender?
