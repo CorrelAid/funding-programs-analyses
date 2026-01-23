@@ -1,26 +1,22 @@
 # Todos
-- [ ] Define further requirements. Backend (descriptive statistics, semantic comparison) or Frontend (plots, filters)?
-- [ ] Define tests.
-- [x] Define UI v0.0 requirements.
-- [x] Implement UI v0.0 requirements.
-  - [x] Display dataframe.
-  - [x] Filter for title.
-  - [x] Filter for location.
-  - [ ] Filter for funding type.
-
+[ ] include funding_area as variable
+[ ] collect ideas for v0.2 (work on UI, work on search for specific keywords, etc.)
 
 # Requirements
-- v0.1
-  - visualize descriptive statistics
-    - number of projects
-    - distribution of funding_location
-  - include funding_area as variable
+[ ] v0.2
+  [ ] ?
+
+[ ] v0.1
+  [x] visualize descriptive statistics
+    [x] number of projects
+    [x] distribution of funding_location
+  [ ] include funding_area as variable
     - clean variable values
     - display in dataframe table
     - show distribution of this variable
   
-- UI v0.0
-  - display dataframe (id_hash, title, funding_area, funding_location)
-  - filter for location
-  - filter for title
-  - filter for funding type
+[x] UI v0.0
+  [x] display dataframe (id_hash, title, funding_area, funding_location)
+  [x] filter for location
+  [x] filter for title
+  [x] filter for funding type
