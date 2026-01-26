@@ -1,7 +1,9 @@
+import config
+
+import hashlib
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import yaml
 
 def create_mask(series: pd.Series, criteria: list | set):
     mask = series.fillna('').str.split(',').apply(
@@ -15,11 +17,12 @@ def count_individually(series: pd.Series, values: list):
     }
     return pd.Series(counts)
 
-config_file = "config.yaml"
-with open(config_file, 'r') as f:
-    config = yaml.safe_load(f)
+def get_hash(x: str):
+    h = hashlib.new("md5")
+    h.update(x.encode())
+    return h.hexdigest()
 
-locations_mapping = config["bundesland_abbr"]
+locations_mapping = config.funding_locations.get("mapping")
 
 st.set_page_config(
     layout="wide"
@@ -32,14 +35,14 @@ funding_types_available = {i.strip() for x in list(df["funding_type"].dropna().u
 title_search_term = st.text_input("Title")
 location_selection = st.multiselect(
     label="Location",
-    options=list(locations_mapping.keys()) + [config["nationwide"]],
-    default=config["default"]["bundesland"]
+    options=list(locations_mapping.keys()) + [config.funding_locations.get("nationwide")],
+    default=config.default.get("funding_location")
     )
 
 funding_type_selection = st.multiselect(
     label="Funding Type",
     options=funding_types_available,
-    default=config["default"]["funding_type"]
+    default=config.default.get("funding_type")
     )
 
 df_ = df.copy()
@@ -70,4 +73,8 @@ fig.update_layout({
 })
 st.plotly_chart(fig, config = {'scrollZoom': False})
 
-st.dataframe(df_, column_order=(["id_hash", "title", "funding_location", "funding_type"]))
+st.dataframe(
+    df_[config.table.get("column_config").keys()],
+    hide_index=True,
+    column_config=config.table.get("column_config"),
+    )
