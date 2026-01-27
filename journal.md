@@ -1,5 +1,4 @@
 # Todos
-[ ] include funding_area as variable
 [ ] collect ideas for v0.2 (work on UI, work on search for specific keywords, etc.)
 
 # Requirements
@@ -11,9 +10,11 @@
     [x] hide index
     [x] hide id_hash
     [x] add link
-    [ ] add long texts
+    [ ] add Kurzzusammenfassung
+      [ ] split between kurztext and volltext
       [ ] add searching option for long texts
-  [ ] add CorrelAid color palette
+  [x] add CorrelAid color palette
+  [x] add CorrelAid font
   [ ] add descriptive metrices (also referring to democracy)
 
 [x] v0.1
@@ -26,3 +27,8 @@
   [x] filter for location
   [x] filter for title
   [x] filter for funding type
+
+# Future
+- harmonize variables such as
+  - eligible_applicants
+  - funding_area
