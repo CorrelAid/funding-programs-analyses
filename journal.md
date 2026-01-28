@@ -5,17 +5,30 @@
 [ ] v1.0
   [ ] [polish for proposal]
 
+[ ] v0.3
+  [ ] improve location filter
+    [ ] change to pills
+    [ ] add buttons to add all options
+  [ ] improve text search filter
+    [ ] add options to search within "Titel", "Kurztext" or "Langtext"
+    [ ] research on how to improve search technique (e.g. not exact but similar term, keyword-based search not whole text, preprocess topics based on description)
+  [ ] add filters on
+    [ ] eligible applicants
+      [ ] introduce comparing visualisation
+    [ ] funding area
+      [ ] introduce comparing visualisation
+  [ ] introduce tabs to switch between metrices/visualisations and tables
+
 [ ] v0.2
   [x] in displayed dataframe
     [x] hide index
     [x] hide id_hash
     [x] add link
-    [ ] add Kurzzusammenfassung
-      [ ] split between kurztext and volltext
-      [ ] add searching option for long texts
+    [x] add Kurzzusammenfassung
+      [x] split between kurztext and volltext
+      [x] add searching option for long texts
   [x] add CorrelAid color palette
   [x] add CorrelAid font
-  [ ] add descriptive metrices (also referring to democracy)
 
 [x] v0.1
   [x] visualize descriptive statistics
@@ -29,6 +42,40 @@
   [x] filter for funding type
 
 # Future
-- harmonize variables such as
-  - eligible_applicants
-  - funding_area
+- test dashboard thoroughly (on edge cases)
+- refractor code
+
+# Ideas by Claude
+## Dashboard
+  Data & Performance
+  - Cache expensive computations with @st.cache_data or @st.cache_resource
+  - Load data once, filter in memory
+  - Consider data aggregation for large datasets
+
+  Layout & Structure
+  - Use st.sidebar for filters and controls
+  - Group related metrics with st.columns
+  - Use st.tabs or st.expander to organize complex content
+  - Keep the most important insights "above the fold"
+
+  Interactivity
+  - Provide sensible defaults for all filters
+  - Use appropriate widgets (selectbox vs multiselect, slider for ranges)
+  - Add st.session_state for cross-widget state when needed
+
+  Visualization
+  - Choose chart types that match your data (bar for comparison, line for
+  trends, scatter for relationships)
+  - Use consistent colors and scales across charts
+  - Add clear titles, axis labels, and legends
+  - Consider colorblind-friendly palettes
+
+  User Experience
+  - Add context with st.metric for KPIs (including delta indicators)
+  - Provide explanatory text where needed
+  - Show loading states with st.spinner
+  - Handle edge cases (empty filters, missing data)
+
+  Code Organization
+  - Separate data loading, processing, and visualization into functions
+  - Keep the main script as a clear flow of components
