@@ -23,7 +23,7 @@ funding_locations = {
 }
 
 default = {
-    "funding_location": ["Hamburg"],
+    "funding_location": ["bundesweit","Hamburg", "Niedersachsen", "Schleswig-Holstein"],
     "funding_type": ["Zuschuss"],
 }
 
