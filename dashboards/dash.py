@@ -52,36 +52,75 @@ df_ = df.copy()
 
 with st.sidebar:
     # Create filters.
-    title_search_term = st.text_input("Title")
-    location_selection = st.pills(
-        label="Location",
-        options=list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")],
-        default=config.default.get("funding_location"),
-        selection_mode="multi"
+    st.title("Sucheinstellungen")
+
+    st.divider()
+
+    # st.text("Textsuche")
+    search_term = st.text_input(
+        label="search_term",
+        label_visibility="collapsed",
+        placeholder="Suchebegriffe",
         )
+    
+    # st.text("Suchfelder")
+    search_fields = st.segmented_control(
+        label="search_fields",
+        label_visibility="collapsed",
+        options=["Titel", "Kurztext", "Volltext"],
+        default=config.default.get("search_fields"),
+        selection_mode="multi",
+        width="stretch"
+    )
+    if search_term and not search_fields:
+        st.warning("Bitte mindestens ein Suchfeld auswählen.")
+
+    st.divider()
+
+    # st.text("Waehle Bundeslaender")
+    all_states = st.toggle(
+        label="wähle Bundesländer aus"
+    )
+    if not all_states:
+        location_selection = st.pills(
+            label="Location",
+            label_visibility="collapsed",
+            options=list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")],
+            default=config.default.get("funding_location"),
+            selection_mode="multi",
+            )
+    else:
+        location_selection = list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")]
 
     # Mask DataFrame according to set filters in dashboard.
-
-    df_ = df_.loc[df_["title"].str.lower().str.contains(title_search_term.lower())]
+    if search_term and search_fields:
+        search_columns = [k for k,v in config.table.get("column_config").items() if v in search_fields]
+        mask_search = df_[search_columns].apply(
+            lambda col: col.str.lower().str.contains(search_term.lower(), na=False)
+        ).any(axis=1)
+        df_ = df_.loc[mask_search]
 
     mask_location = create_mask(df["funding_location"], location_selection)
     df_ = df_.loc[mask_location]
 
-    st.write(f"Number of fundings found: {len(df_)}")
+    st.divider()
+
+    st.write(f"{len(df_)} Suchergebnisse.")
     
 
+tab_stats, tab_findings = st.tabs(["Statistik", "Suchergebnisse"])
 
-
-fig = px.bar(count_individually(df_["funding_location"], location_selection), title="Counts of fundings per location")
-fig.update_layout({
-    'xaxis_title_text': 'State',
-    'yaxis_title_text': 'Counts',
-    'showlegend': False, 
-})
-st.plotly_chart(fig, config = {'scrollZoom': False})
-
-st.dataframe(
-    df_[config.table.get("column_config").keys()],
-    hide_index=True,
-    column_config=config.table.get("column_config"),
-    )
+with tab_stats:
+    fig = px.bar(count_individually(df_["funding_location"], location_selection), title="Counts of fundings per location")
+    fig.update_layout({
+        'xaxis_title_text': 'State',
+        'yaxis_title_text': 'Counts',
+        'showlegend': False, 
+    })
+    st.plotly_chart(fig, config = {'scrollZoom': False})
+with tab_findings:
+    st.dataframe(
+        df_[config.table.get("column_config").keys()],
+        hide_index=True,
+        column_config=config.table.get("column_config"),
+        )

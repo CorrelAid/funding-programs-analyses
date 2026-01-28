@@ -25,6 +25,7 @@ funding_locations = {
 default = {
     "funding_location": ["bundesweit","Hamburg", "Niedersachsen", "Schleswig-Holstein"],
     "funding_type": ["Zuschuss"],
+    "search_fields": ["Titel", "Kurztext", "Volltext"]
 }
 
 table = {
