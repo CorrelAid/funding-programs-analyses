@@ -6,18 +6,18 @@
   [ ] [polish for proposal]
 
 [ ] v0.3
-  [ ] improve location filter
-    [ ] change to pills
-    [ ] add buttons to add all options
-  [ ] improve text search filter
-    [ ] add options to search within "Titel", "Kurztext" or "Langtext"
+  [x] improve location filter
+    [x] change to pills
+    [x] add buttons to add all options
+  [x] improve text search filter
+    [x] add options to search within "Titel", "Kurztext" or "Langtext"
     [ ] research on how to improve search technique (e.g. not exact but similar term, keyword-based search not whole text, preprocess topics based on description)
   [ ] add filters on
     [ ] eligible applicants
       [ ] introduce comparing visualisation
     [ ] funding area
       [ ] introduce comparing visualisation
-  [ ] introduce tabs to switch between metrices/visualisations and tables
+  [x] introduce tabs to switch between metrices/visualisations and tables
 
 [ ] v0.2
   [x] in displayed dataframe
