@@ -32,7 +32,9 @@ table = {
         "title": "Titel",
         "funding_location": "Land",
         "funding_type": "Finanzierung",
-        "description": "Beschreibung",
+        # "description": "Beschreibung",
+        "description_short": "Kurztext",
+        "description_full": "Volltext",
         "url": st.column_config.LinkColumn(
                 "Link",
                 display_text="Link"
