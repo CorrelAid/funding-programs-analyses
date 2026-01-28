@@ -46,8 +46,6 @@ st.set_page_config(
 
 df = pd.read_parquet("data/sample_dashboard_data.parquet")
 df[["description_short", "description_full"]] = split_description(df)
-# funding_types_available = {i.strip() for x in list(df["funding_type"].dropna().unique()) for i in x.split(',')}
-
 df_ = df.copy()
 
 ### Create dashboards elements.
@@ -62,22 +60,12 @@ with st.sidebar:
         selection_mode="multi"
         )
 
-    # funding_type_selection = st.multiselect(
-    #     label="Funding Type",
-    #     options=funding_types_available,
-    #     # default=config.default.get("funding_type")
-    #     default=funding_types_available
-    #     )
-
     # Mask DataFrame according to set filters in dashboard.
 
     df_ = df_.loc[df_["title"].str.lower().str.contains(title_search_term.lower())]
 
     mask_location = create_mask(df["funding_location"], location_selection)
     df_ = df_.loc[mask_location]
-
-    # mask_funding_type = create_mask(df["funding_type"], funding_type_selection)
-    # df_ = df_.loc[mask_funding_type]
 
     st.write(f"Number of fundings found: {len(df_)}")
     
@@ -91,14 +79,6 @@ fig.update_layout({
     'showlegend': False, 
 })
 st.plotly_chart(fig, config = {'scrollZoom': False})
-
-# fig = px.bar(count_individually(df_["funding_type"], funding_type_selection), title="Counts of fundings per type")
-# fig.update_layout({
-#     'xaxis_title_text': 'Type',
-#     'yaxis_title_text': 'Counts',
-#     'showlegend': False, 
-# })
-# st.plotly_chart(fig, config = {'scrollZoom': False})
 
 st.dataframe(
     df_[config.table.get("column_config").keys()],
