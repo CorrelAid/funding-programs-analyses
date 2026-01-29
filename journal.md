@@ -12,14 +12,15 @@
   [x] improve text search filter
     [x] add options to search within "Titel", "Kurztext" or "Langtext"
     [ ] research on how to improve search technique (e.g. not exact but similar term, keyword-based search not whole text, preprocess topics based on description)
-  [ ] add filters on
-    [ ] eligible applicants
-      [ ] introduce comparing visualisation
-    [ ] funding area
-      [ ] introduce comparing visualisation
+  [x] add eligible applicants
+    [x] add filter
+    [x] introduce comparing visualisation
+  [ ] add funding area
+    [ ] add filter <- same pattern as for eligible applicants
+    [ ] introduce comparing visualisation
   [x] introduce tabs to switch between metrices/visualisations and tables
 
-[ ] v0.2
+[x] v0.2
   [x] in displayed dataframe
     [x] hide index
     [x] hide id_hash
