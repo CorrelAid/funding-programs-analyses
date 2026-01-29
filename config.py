@@ -31,8 +31,9 @@ default = {
 table = {
     "column_config": {
         "title": "Titel",
-        "funding_location": "Land",
-        "funding_type": "Finanzierung",
+        "funding_location": "Gebiet",
+        "eligible_applicants": "Berechtigte",
+        # "funding_type": "Art",
         # "description": "Beschreibung",
         "description_short": "Kurztext",
         "description_full": "Volltext",

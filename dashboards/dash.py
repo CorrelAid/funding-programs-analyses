@@ -17,7 +17,7 @@ def create_mask(series: pd.Series, criteria: list | set):
     ) 
     return mask
 
-def count_individually(series: pd.Series, values: list):
+def count_categories(series: pd.Series, values: list) -> pd.Series:
     """
     Count every single occurences of given values in each cell in given Series.
     """
@@ -36,7 +36,13 @@ def split_description(series: pd.Series) -> pd.DataFrame:
     )
     return extracted
 
-### Setup streamlit page.
+def extract_categories(series: pd.Series, separator=",") -> set:
+    """
+    Split each element into constiuent categories and return set of unique categories.
+    """
+    return {i.strip() for x in list(series.dropna().unique()) for i in x.split(separator)}
+
+### Setup streamlit dashboard.
 
 st.set_page_config(
     layout="wide"
@@ -45,25 +51,23 @@ st.set_page_config(
 ### Preprocess DataFrame with fundings.
 
 df = pd.read_parquet("data/sample_dashboard_data.parquet")
+eligible_applicants_available = extract_categories(df["eligible_applicants"])
 df[["description_short", "description_full"]] = split_description(df)
 df_ = df.copy()
 
 ### Create dashboards elements.
 
+## Create sidebar with filters.
 with st.sidebar:
-    # Create filters.
+    # Create text search filter.
     st.title("Sucheinstellungen")
 
-    st.divider()
-
-    # st.text("Textsuche")
     search_term = st.text_input(
         label="search_term",
         label_visibility="collapsed",
         placeholder="Suchebegriffe",
         )
     
-    # st.text("Suchfelder")
     search_fields = st.segmented_control(
         label="search_fields",
         label_visibility="collapsed",
@@ -75,50 +79,80 @@ with st.sidebar:
     if search_term and not search_fields:
         st.warning("Bitte mindestens ein Suchfeld auswählen.")
 
-    st.divider()
+    st.markdown("\n")
 
-    # st.text("Waehle Bundeslaender")
-    all_states = st.toggle(
-        label="wähle Bundesländer aus"
-    )
-    if not all_states:
-        location_selection = st.pills(
-            label="Location",
-            label_visibility="collapsed",
-            options=list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")],
-            default=config.default.get("funding_location"),
-            selection_mode="multi",
-            )
-    else:
-        location_selection = list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")]
+    ## Create filter for funding locations.
+    with st.expander("Fördergebiet"):
 
-    # Mask DataFrame according to set filters in dashboard.
-    if search_term and search_fields:
-        search_columns = [k for k,v in config.table.get("column_config").items() if v in search_fields]
-        mask_search = df_[search_columns].apply(
-            lambda col: col.str.lower().str.contains(search_term.lower(), na=False)
-        ).any(axis=1)
-        df_ = df_.loc[mask_search]
+        # Create toggle button to switch between individual selection of locations or complete selection.
+        all_states = st.toggle(
+            label="alle Bundesländer",
+            value=True
+        )
 
-    mask_location = create_mask(df["funding_location"], location_selection)
-    df_ = df_.loc[mask_location]
+        # Create selection for locations.
+        if not all_states:
+            location_selection = st.pills(
+                label="Location",
+                label_visibility="collapsed",
+                options=list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")],
+                default=config.default.get("funding_location"),
+                selection_mode="multi",
+                )
+        else:
+            location_selection = list(config.funding_locations.get("mapping").keys()) + [config.funding_locations.get("nationwide")]
 
-    st.divider()
+        # Mask DataFrame according to selection.
+        if search_term and search_fields:
+            search_columns = [k for k,v in config.table.get("column_config").items() if v in search_fields]
+            mask_search = df_[search_columns].apply(
+                lambda col: col.str.lower().str.contains(search_term.lower(), na=False)
+            ).any(axis=1)
+            df_ = df_.loc[mask_search]
 
-    st.write(f"{len(df_)} Suchergebnisse.")
+        mask_location = create_mask(df["funding_location"], location_selection)
+        df_ = df_.loc[mask_location]
+
+    ## Create filter filter for eligible applicants.
+    with st.expander("Förderberechtigte"):
+        eligible_applicants_selection = st.pills(
+        label="Eligible Applicants",
+        label_visibility="collapsed",
+        options=eligible_applicants_available,
+        default=eligible_applicants_available,
+        selection_mode="multi"
+        )
     
+        # Mask DataFrame according to selection.
+        mask_location = create_mask(df["eligible_applicants"], eligible_applicants_selection)
+        df_ = df_.loc[mask_location]
 
+    st.write(f"{len(df_)} Förderungen gefunden.")
+
+## Create tabs to switch between statistics and table of results.
 tab_stats, tab_findings = st.tabs(["Statistik", "Suchergebnisse"])
 
 with tab_stats:
-    fig = px.bar(count_individually(df_["funding_location"], location_selection), title="Counts of fundings per location")
+    # Plot counts of fundings per location.
+    fig = px.bar(count_categories(df_["funding_location"], location_selection), title="Anzahl der Förderungen nach Fördergebiet")
     fig.update_layout({
-        'xaxis_title_text': 'State',
-        'yaxis_title_text': 'Counts',
+        'xaxis_title_text': '',
+        'yaxis_title_text': '',
         'showlegend': False, 
     })
     st.plotly_chart(fig, config = {'scrollZoom': False})
+
+    # Plot counts of fundings per eligible applicant.
+    fig = px.bar(count_categories(df_["eligible_applicants"], eligible_applicants_selection), title="Anzahl der Förderungen Förderberechtigte")
+    fig.update_layout({
+        'xaxis_title_text': '',
+        'yaxis_title_text': '',
+        'showlegend': False, 
+    })
+    st.plotly_chart(fig, config = {'scrollZoom': False})
+
 with tab_findings:
+    # Display masked DataFrame as table.
     st.dataframe(
         df_[config.table.get("column_config").keys()],
         hide_index=True,
