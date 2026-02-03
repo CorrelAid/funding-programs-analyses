@@ -3,7 +3,14 @@
 
 # Requirements
 [ ] v1.0
-  [ ] [polish for proposal]
+  [ ] [polish for exchange]
+
+[ ] v0.4
+  [ ] clean repo
+    [ ] refractor
+  [ ] UI
+    [ ] adapt default selection for better initial overview
+    [ ] remove blank space in top area
 
 [ ] v0.3
   [x] improve location filter
@@ -15,9 +22,9 @@
   [x] add eligible applicants
     [x] add filter
     [x] introduce comparing visualisation
-  [ ] add funding area
-    [ ] add filter <- same pattern as for eligible applicants
-    [ ] introduce comparing visualisation
+  [x] add funding area
+    [x] add filter <- same pattern as for eligible applicants
+    [x] introduce comparing visualisation
   [x] introduce tabs to switch between metrices/visualisations and tables
 
 [x] v0.2
