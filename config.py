@@ -33,6 +33,7 @@ table = {
         "title": "Titel",
         "funding_location": "Gebiet",
         "eligible_applicants": "Berechtigte",
+        "funding_area": "Förderbereich",
         # "funding_type": "Art",
         # "description": "Beschreibung",
         "description_short": "Kurztext",
