@@ -28,5 +28,10 @@ This project relies on data which is provided by a [funding scraper](https://git
 
 Python dependencies are listed in 'requirements.txt'.
 
+# Setup
+
+1. Install the dependencies.
+2. To run the dashboard execute the script `./run_dashboard.sh`.
+
 
 
