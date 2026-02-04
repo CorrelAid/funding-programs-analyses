@@ -15,7 +15,7 @@ Please note that this project is in early-stage.
   ├── notebooks/eda.ipynb   # exploratory analysis
   ├── requirements.txt      # python dependencies
   ├── run_dashboard.sh      # dashboard launch script
-  └── utils.py.             # shared utilities
+  └── utils.py              # shared utilities
   ```
 
 # Data
