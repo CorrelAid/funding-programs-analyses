@@ -11,7 +11,7 @@
   - [x] UI
     - [x] adapt default selection for better initial overview
 
-- [ ] v0.3
+- [x] v0.3
   - [x] improve location filter
     - [x] change to pills
     - [x] add buttons to add all options
