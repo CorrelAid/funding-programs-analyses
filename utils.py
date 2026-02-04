@@ -19,7 +19,7 @@ def create_mask(series: pd.Series, criteria: list | set):
 
 def count_categories(series: pd.Series, values: list) -> pd.Series:
     """
-    Count every single occurences of given values in each cell in given Series.
+    Count every single occurrence of given values in each cell in given Series.
     """
     counts = {
         v: series.str.contains(rf"\b{v}\b(?!-)", na=False, regex=True).sum() for v in values
