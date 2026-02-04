@@ -1,16 +1,15 @@
 # Todos
-[ ] collect ideas for v0.2 (work on UI, work on search for specific keywords, etc.)
+[ ] collect ideas for v1.0 (make ready for exchange)
+[ ] collect ideas for v1.1 (include more sophisticated funding search, tests)
 
 # Requirements
 [ ] v1.0
-  [ ] [polish for exchange]
 
-[ ] v0.4
-  [ ] clean repo
-    [ ] refractor
-  [ ] UI
-    [ ] adapt default selection for better initial overview
-    [ ] remove blank space in top area
+[x] v0.4
+  [x] clean repo
+    [x] refractor
+  [x] UI
+    [x] adapt default selection for better initial overview
 
 [ ] v0.3
   [x] improve location filter
@@ -48,10 +47,6 @@
   [x] filter for location
   [x] filter for title
   [x] filter for funding type
-
-# Future
-- test dashboard thoroughly (on edge cases)
-- refractor code
 
 # Ideas by Claude
 ## Dashboard
