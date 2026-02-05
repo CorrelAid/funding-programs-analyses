@@ -75,7 +75,7 @@ with st.sidebar:
 
         # Mask DataFrame.
         if search_term and search_fields:
-            search_columns = [k for k,v in config.table.get("column_config").items() if v in search_fields]
+            search_columns = [k for k,v in config.table.get('column_labels').items() if v in config.default.get('search_fields')]
             mask_search = utils.create_search_mask(df_, search_columns, search_term, fuzzy=config.default.get("fuzzy_search"))
             df_ = df_.loc[mask_search]
 
@@ -142,10 +142,16 @@ with tab_stats:
     create_category_bar_chart(df_["eligible_applicants"], eligible_applicants_selection, "Anzahl der Förderungen nach Berechtigte")
 
 with tab_findings:
-    # Display masked DataFrame as table.
+    # Prepare masked DataFrame as table.
+    df_display = df_.copy()
+    df_display["title"] = df_.apply(
+        lambda row: f"{row['url']}##{row['title']}" if pd.notna(row["url"]) else row["title"],
+        axis=1
+    )
     st.dataframe(
-        df_[config.table.get("column_config").keys()],
+        df_display[config.table.get("column_config").keys()],
         hide_index=True,
         column_config=config.table.get("column_config"),
-        width="stretch"
+        column_order=config.default.get('column_order'),
+        width="stretch",
         )

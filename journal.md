@@ -1,11 +1,10 @@
 # Todos
 
 # Requirements
-- [ ] v1.0
-
-- [ ] v0.5
+- [x] v0.5
   - [x] improve text search
-  - [ ] improve readability of dataframe
+  - [x] improve readability of dataframe
+    - [x] place link behind funding title
 
 - [x] v0.4
   - [x] clean repo
@@ -19,7 +18,6 @@
     - [x] add buttons to add all options
   - [x] improve text search filter
     - [x] add options to search within "Titel", "Kurztext" or "Langtext"
-    - [ ] research on how to improve search technique (e.g. not exact but similar term, keyword-based search not whole text, preprocess topics based on description)
   - [x] add eligible applicants
     - [x] add filter
     - [x] introduce comparing visualisation

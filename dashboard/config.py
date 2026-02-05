@@ -28,21 +28,31 @@ default = {
     "funding_location": ["bundesweit","Hamburg", "Niedersachsen", "Schleswig-Holstein"],
     "funding_type": ["Zuschuss"],
     "funding_area": ["Frauenförderung","Gesundheit & Soziales", "Infrastruktur", "Wohnungsbau & Modernisierung", "Mobilität", "Landwirtschaft & Ländliche Entwicklung"],
+    "column_order": ["title", "funding_location", "funding_area", "eligible_applicants"], # sets default visible columns
 }
 
 table = {
     "column_config": {
-        "title": "Titel",
-        "funding_location": "Gebiet",
-        "eligible_applicants": "Berechtigte",
-        "funding_area": "Förderbereich",
-        # "funding_type": "Art",
-        # "description": "Beschreibung",
-        "description_short": "Kurztext",
-        "description_full": "Volltext",
-        "url": st.column_config.LinkColumn(
-                "Link",
-                display_text="Link"
-        )
-    }
+        "title": st.column_config.LinkColumn(
+            label="Titel",
+            display_text=r".*##(.+)",
+        ),
+        "funding_location": st.column_config.Column(
+            label="Gebiet",
+        ),
+        "eligible_applicants": st.column_config.Column(
+            label="Berechtigte",
+        ),
+        "funding_area": st.column_config.Column(
+            label="Förderbereich",
+        ),
+        "description_short": st.column_config.Column(
+            label="Kurztext",
+        ),
+        "description_full": st.column_config.Column(
+            label="Volltext",
+        ),
+    },
 }
+
+table["column_labels"] = {k:v.get('label') for k,v in table.get('column_config').items()}
