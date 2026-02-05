@@ -23,10 +23,11 @@ funding_locations = {
 }
 
 default = {
+    "search_fields": ["Titel", "Kurztext", "Volltext"],
+    "fuzzy_search": True,
     "funding_location": ["bundesweit","Hamburg", "Niedersachsen", "Schleswig-Holstein"],
     "funding_type": ["Zuschuss"],
-    "search_fields": ["Titel", "Kurztext", "Volltext"],
-    "funding_area": ["Frauenförderung","Gesundheit & Soziales", "Infrastruktur", "Wohnungsbau & Modernisierung", "Mobilität", "Landwirtschaft & Ländliche Entwicklung"]
+    "funding_area": ["Frauenförderung","Gesundheit & Soziales", "Infrastruktur", "Wohnungsbau & Modernisierung", "Mobilität", "Landwirtschaft & Ländliche Entwicklung"],
 }
 
 table = {

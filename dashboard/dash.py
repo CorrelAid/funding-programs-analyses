@@ -30,7 +30,7 @@ st.set_page_config(
 
 with st.sidebar:
     # Create text search filter.
-    st.title("Sucheinstellungen")
+    st.title("Suche")
 
     search_term = st.text_input(
         label="search_term",
@@ -46,6 +46,7 @@ with st.sidebar:
         selection_mode="multi",
         width="stretch"
     )
+
     if search_term and not search_fields:
         st.warning("Bitte mindestens ein Suchfeld auswählen.")
 
@@ -75,9 +76,7 @@ with st.sidebar:
         # Mask DataFrame.
         if search_term and search_fields:
             search_columns = [k for k,v in config.table.get("column_config").items() if v in search_fields]
-            mask_search = df_[search_columns].apply(
-                lambda col: col.str.lower().str.contains(search_term.lower(), na=False)
-            ).any(axis=1)
+            mask_search = utils.create_search_mask(df_, search_columns, search_term, fuzzy=config.default.get("fuzzy_search"))
             df_ = df_.loc[mask_search]
 
         mask_location = utils.create_mask(df["funding_location"], location_selection)

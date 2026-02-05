@@ -1,9 +1,11 @@
 # Todos
-- [ ] collect ideas for v1.0 (make ready for exchange)
-- [ ] collect ideas for v1.1 (include more sophisticated funding search, tests)
 
 # Requirements
 - [ ] v1.0
+
+- [ ] v0.5
+  - [x] improve text search
+  - [ ] improve readability of dataframe
 
 - [x] v0.4
   - [x] clean repo
